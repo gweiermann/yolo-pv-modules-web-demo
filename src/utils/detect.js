@@ -52,7 +52,7 @@ export const detect = async (source, model, canvasRef, callback = () => {}) => {
   const [input, xRatio, yRatio] = preprocess(source, modelWidth, modelHeight); // preprocess image
 
   const res = model.net.execute(input); // inference model
-  const transRes = res.transpose([0, 2, 1]); // transpose result [b, det, n] => [b, n, det]
+  const transRes = res[0].transpose([0, 2, 1]); // transpose result [b, det, n] => [b, n, det]
   const boxes = tf.tidy(() => {
     const w = transRes.slice([0, 0, 2], [-1, -1, 1]); // get width
     const h = transRes.slice([0, 0, 3], [-1, -1, 1]); // get height
@@ -77,7 +77,7 @@ export const detect = async (source, model, canvasRef, callback = () => {}) => {
     return [rawScores.max(1), rawScores.argMax(1)];
   }); // get max scores and classes index
 
-  const nms = await tf.image.nonMaxSuppressionAsync(boxes, scores, 500, 0.45, 0.2); // NMS to filter boxes
+  const nms = await tf.image.nonMaxSuppressionAsync(boxes, scores, 500, 0.8, 0.2); // NMS to filter boxes
 
   const boxes_data = boxes.gather(nms, 0).dataSync(); // indexing boxes by nms index
   const scores_data = scores.gather(nms, 0).dataSync(); // indexing scores by nms index

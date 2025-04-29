@@ -38,28 +38,17 @@ export const renderBoxes = (canvasRef, boxes_data, scores_data, classes_data, ra
 
     // draw box.
     ctx.fillStyle = Colors.hexToRgba(color, 0.2);
-    ctx.fillRect(x1, y1, width, height);
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y1);
+    ctx.lineTo(x2, y2);
+    ctx.lineTo(x1, y2);
+    ctx.fill();
 
     // draw border box.
     ctx.strokeStyle = color;
     ctx.lineWidth = Math.max(Math.min(ctx.canvas.width, ctx.canvas.height) / 200, 2.5);
     ctx.strokeRect(x1, y1, width, height);
-
-    // Draw the label background.
-    ctx.fillStyle = color;
-    const textWidth = ctx.measureText(klass + " - " + score + "%").width;
-    const textHeight = parseInt(font, 10); // base 10
-    const yText = y1 - (textHeight + ctx.lineWidth);
-    ctx.fillRect(
-      x1 - 1,
-      yText < 0 ? 0 : yText, // handle overflow label box
-      textWidth + ctx.lineWidth,
-      textHeight + ctx.lineWidth
-    );
-
-    // Draw labels
-    ctx.fillStyle = "#ffffff";
-    ctx.fillText(klass + " - " + score + "%", x1 - 1, yText < 0 ? 0 : yText);
   }
 };
 
@@ -67,26 +56,7 @@ class Colors {
   // ultralytics color palette https://ultralytics.com/
   constructor() {
     this.palette = [
-      "#FF3838",
-      "#FF9D97",
-      "#FF701F",
-      "#FFB21D",
-      "#CFD231",
-      "#48F90A",
-      "#92CC17",
-      "#3DDB86",
-      "#1A9334",
-      "#00D4BB",
-      "#2C99A8",
-      "#00C2FF",
-      "#344593",
-      "#6473FF",
-      "#0018EC",
-      "#8438FF",
-      "#520085",
-      "#CB38FF",
-      "#FF95C8",
-      "#FF37C7",
+      "#6BBF59"
     ];
     this.n = this.palette.length;
   }
