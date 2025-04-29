@@ -12,20 +12,35 @@
 Object Detection application right in your browser. Serving YOLOv8 in browser using tensorflow.js
 with `webgl` backend.
 
-**Setup**
+## Setup
+
+### Using `yarn`
 
 ```bash
-git clone https://github.com/Hyuto/yolov8-tfjs.git
-cd yolov8-tfjs
+git clone https://github.com/gweiermann/yolo-pv-modules-web-demo.git
+cd yolo-pv-modules-web-demo
 yarn install #Install dependencies
 ```
 
-**Scripts**
+**Running it**
 
 ```bash
-yarn start # Start dev server
-yarn build # Build for productions
+# Start dev server
+yarn start 
+
+# Build and run for production
+yarn build
+yarn run preview
 ```
+
+### Using `docker`
+```bash
+docker build -t web-based-pv-detection .
+docker run --rm -p 3000:3000 web-based-pv-detection
+```
+
+## View it
+The website is served at [http://localhost:3000](http://localhost:3000)
 
 ## Model
 
